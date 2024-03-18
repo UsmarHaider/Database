@@ -100,3 +100,49 @@ Select * from UserCard
 Select * from [Card]
 Select * from CardType
 Select * from [Transaction]
+
+-- Part 1
+Select name, cardNum
+from [User] INNER JOIN UserCard
+ON [User].userID = UserCard.userID
+
+-- Part 2
+Select balance, cardNum, name
+from Card INNER JOIN CardType
+ON Card.cardTypeID = CardType.cardTypeID
+
+-- Part 3
+SELECT cardNum, amount
+from Card 
+LEFT JOIN CardType ON Card.cardTypeID = CardType.cardTypeID
+RIGHT JOIN [Transaction] ON Card.cardNum = [Transaction].cardNum
+
+-- Part 4
+SELECT name, cardNum, amount
+from [User] 
+LEFT JOIN UserCard ON [User].userId = UserCard.userID
+RIGHT JOIN [Transaction] ON UserCard.cardNum = [Transaction].cardNum
+
+-- Part 5
+Select name
+from [User] LEFT OUTER JOIN UserCard
+ON [User].userId = UserCard.userID
+WHERE UserCard.userID is null
+
+-- Part 6
+SELECT name, cardNum
+from [User] 
+LEFT OUTER JOIN UserCard ON [User].userId = UserCard.userID
+LEFT OUTER JOIN Card ON UserCard.cardNum = Card.cardNum
+WHERE Card.balance BETWEEN 2000 and 4000
+
+-- Part 7
+SELECT  userId, name, phoneNum, city, DATEDIFF(MONTH,'2022-03-13' , expireDate) as Months
+from [User]
+LEFT OUTER JOIN UserCard ON [User].userId = UserCard.userID
+LEFT OUTER JOIN Card ON UserCard.cardNum = Card.cardNum
+Where DATEDIFF(MONTH,'2022-03-13' , Card.expireDate) > 3
+
+
+
+
